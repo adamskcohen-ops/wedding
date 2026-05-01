@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0064)file:///C:/Users/65397/Downloads/adam-and-raymond-wedding_4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adam &amp; Raymond — September 17–18, 2027</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="./Adam &amp; Raymond — September 17–18, 2027_files/css2" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Italiana&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ivory: #f6f1e7;
@@ -22,6 +21,17 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html { scroll-behavior: smooth; }
+  section[id], header[id] { scroll-margin-top: 90px; }
+  ::selection { background: var(--gold); color: var(--ivory); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
 
   body {
     background: var(--ivory);
@@ -315,9 +325,15 @@
   }
 
   .hero-countdown {
-    margin-top: 4rem;
+    margin-top: 3.5rem;
     display: flex;
-    gap: 2.5rem;
+    gap: 2.25rem;
+    padding: 1.2rem 2rem;
+    background: rgba(246, 241, 231, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(168,138,63,0.25);
+    border-bottom: 1px solid rgba(168,138,63,0.25);
     opacity: 0;
     animation: fadeUp 1.4s ease 1.5s forwards;
   }
@@ -332,6 +348,8 @@
     color: var(--forest-deep);
     line-height: 1;
     display: block;
+    font-variant-numeric: tabular-nums;
+    min-width: 2.2ch;
   }
 
   .countdown-label {
@@ -993,6 +1011,15 @@
     opacity: 0.5;
   }
 
+  /* Reveal-on-scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 1s ease, transform 1s ease;
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
   /* Mobile */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
@@ -1021,13 +1048,30 @@
     .form-row { grid-template-columns: 1fr; gap: 2rem; }
     .event-card { padding: 2.5rem 2rem; }
 
-    .hero-countdown { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
-    .countdown-num { font-size: 1.8rem; }
+    .hero-countdown {
+      gap: 1.25rem;
+      padding: 1rem 1.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 92vw;
+    }
+    .countdown-num { font-size: 1.6rem; }
+    .countdown-label { font-size: 0.55rem; letter-spacing: 0.25em; }
+    .hero-prelude { font-size: 0.65rem; letter-spacing: 0.4em; margin-bottom: 1.5rem; }
+    .hero-date { font-size: 1.1rem; padding: 0 0.5rem; }
+    .hero-location { font-size: 0.65rem; letter-spacing: 0.25em; padding: 0 0.5rem; }
+    .section-label { font-size: 0.62rem; letter-spacing: 0.4em; }
+    .section-sub { font-size: 1.05rem; padding: 0 0.5rem; }
+    .schedule-title { font-size: 1.6rem; }
+    .event-name { font-size: 1.7rem; }
+    .nav-mark { font-size: 0.95rem; letter-spacing: 0.18em; }
 
-    .timeline::before { left: 70px; }
-    .timeline-item { grid-template-columns: 65px 1fr; gap: 1rem; }
-    .timeline-item::before { left: 66px; }
+    .timeline::before { left: 78px; }
+    .timeline-item { grid-template-columns: 72px 1fr; gap: 1rem; padding: 0.75rem 0; }
+    .timeline-item::before { left: 73px; top: 1.4rem; }
+    .timeline-time { font-size: 0.95rem; }
     .timeline-event { padding-left: 1.5rem; }
+    .timeline-event h4 { font-size: 1.15rem; }
 
     .rsvp::before { inset: 1rem; }
 
@@ -1046,10 +1090,10 @@
 <nav>
   <div class="nav-mark">Adam &amp; Raymond</div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="file:///C:/Users/65397/Downloads/adam-and-raymond-wedding_4.html#events">Events</a></li>
-    <li><a href="file:///C:/Users/65397/Downloads/adam-and-raymond-wedding_4.html#rsvp">RSVP</a></li>
-    <li><a href="file:///C:/Users/65397/Downloads/adam-and-raymond-wedding_4.html#registry">Registry</a></li>
-    <li><a href="file:///C:/Users/65397/Downloads/adam-and-raymond-wedding_4.html#travel">Travel</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#rsvp">RSVP</a></li>
+    <li><a href="#registry">Registry</a></li>
+    <li><a href="#travel">Travel</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1229,10 +1273,10 @@
     <div class="hero-location">carmel valley ranch · carmel, california · september 2027</div>
 
     <div class="hero-countdown" id="countdown">
-      <div class="countdown-unit"><span class="countdown-num" id="cd-days">513</span><div class="countdown-label">Days</div></div>
-      <div class="countdown-unit"><span class="countdown-num" id="cd-hours">23</span><div class="countdown-label">Hours</div></div>
-      <div class="countdown-unit"><span class="countdown-num" id="cd-mins">33</span><div class="countdown-label">Minutes</div></div>
-      <div class="countdown-unit"><span class="countdown-num" id="cd-secs">38</span><div class="countdown-label">Seconds</div></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-days">—</span><div class="countdown-label">Days</div></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-hours">—</span><div class="countdown-label">Hours</div></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-mins">—</span><div class="countdown-label">Minutes</div></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-secs">—</span><div class="countdown-label">Seconds</div></div>
     </div>
   </div>
 
@@ -1351,7 +1395,7 @@
     <p class="section-sub">We hope you can join us. Please share your response at the link below.</p>
 
     <div class="rsvp-cta">
-      <a href="file:///C:/Users/65397/Downloads/adam-and-raymond-wedding_4.html#" id="rsvpLink" target="_blank" rel="noopener" class="submit-btn rsvp-btn disabled">RSVP link coming soon</a>
+      <a href="#" id="rsvpLink" target="_blank" rel="noopener" class="submit-btn rsvp-btn disabled">RSVP link coming soon</a>
       <p class="rsvp-deadline">Deadline to be announced</p>
     </div>
   </div>
@@ -1466,6 +1510,32 @@
 </footer>
 
 <script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.event-card, .timeline-item, .travel-item, .registry-placeholder, .registry-card, .schedule-title, .section-title, .section-label, .section-sub, .ornamental-divider, .registry-intro');
+  revealEls.forEach(el => el.classList.add('reveal'));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  }
+
+  // Nav background intensifies on scroll
+  const navEl = document.querySelector('nav');
+  const onScroll = () => {
+    if (window.scrollY > 30) navEl.style.background = 'rgba(246, 241, 231, 0.97)';
+    else navEl.style.background = 'rgba(246, 241, 231, 0.92)';
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
   // Nav toggle
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
