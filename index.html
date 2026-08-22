@@ -1249,68 +1249,204 @@ footer::before {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+
+/* Mobile nav overlay (dims page behind the drawer) */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(29,40,32,0.45);
+  z-index: 198;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  transition: opacity 0.35s ease;
+}
+.nav-overlay.show { display: block; }
+
+/* Disable Ken Burns & heavy animations on touch/mobile to save battery */
+@media (pointer: coarse), (max-width: 768px) {
+  .hero-landscape.idle { animation: none; }
+  .hero-flourish { animation: none !important; opacity: 0.65 !important; }
+}
+
+/* Ensure hero content is always visible on touch devices
+   (parallax JS is skipped on touch, so opacity stays at 1 from CSS) */
+@media (pointer: coarse) {
+  #heroContent {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── Tablet: story timeline (900px) ── */
 @media (max-width: 900px) {
-  .story-moment { grid-template-columns: 1fr; gap: 0; }
   .story-timeline::before { display: none; }
 
-  .story-moment:nth-child(odd)  .sm-content,
-  .story-moment:nth-child(even) .sm-content { grid-column: 1; text-align: left; order: 2; }
+  /* Stack all story moments to single column */
+  .story-moment {
+    display: block;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(168,138,63,0.12);
+  }
+  .story-moment:last-child { border-bottom: none; }
 
-  .story-moment:nth-child(odd)  .sm-pivot,
-  .story-moment:nth-child(even) .sm-pivot { grid-column: 1; flex-direction: row; align-items: center; order: 1; justify-content: flex-start; margin-bottom: 1rem; }
+  .story-moment .sm-empty { display: none; }
 
-  .story-moment:nth-child(odd)  .sm-empty,
-  .story-moment:nth-child(even) .sm-empty { display: none; }
+  .story-moment .sm-pivot {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    justify-content: flex-start;
+  }
+
+  .story-moment .sm-content {
+    text-align: left !important;
+  }
 
   .story-pullquote { padding: 2.5rem 1.75rem; }
   .story-pullquote blockquote { font-size: 1.22rem; }
 }
 
+/* ── Mobile: 768px ── */
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
+
   .nav-links {
     position: fixed;
     top: 0; right: 0;
-    height: 100vh; width: 75%;
+    height: 100dvh; /* use dvh so URL bar doesn't cover content */
+    width: min(75%, 280px);
     background: var(--ivory);
     flex-direction: column;
     justify-content: center;
-    gap: 2.75rem;
-    padding: 2rem;
+    align-items: flex-start;
+    gap: 2.5rem;
+    padding: 2.5rem 2rem;
     transform: translateX(100%);
-    transition: transform 0.48s var(--ease-expo);
+    transition: transform 0.45s var(--ease-expo);
     border-left: 1px solid rgba(168,138,63,0.16);
     z-index: 200;
   }
   .nav-links.open { transform: translateX(0); }
-  .nav-toggle { display: block; z-index: 201; }
+  .nav-links a { font-size: 0.82rem; letter-spacing: 0.18em; }
 
-  section { padding: 5rem 1.5rem; }
-  .story { padding: 6rem 1.5rem; }
-  .rsvp  { padding: 6rem 1.5rem; }
+  .nav-toggle {
+    display: block;
+    z-index: 201;
+    padding: 0.5rem; /* larger tap target */
+    margin-right: -0.5rem;
+  }
+
+  section { padding: 5rem 1.25rem; }
+  .story  { padding: 5.5rem 1.25rem; }
+  .rsvp   { padding: 6rem 1.25rem; }
 
   .event-grid,
   .travel-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .event-card  { padding: 2.5rem 2rem; }
+  .event-card  { padding: 2.5rem 1.75rem; }
 
-  .hero-countdown { flex-wrap: wrap; justify-content: center; }
-  .countdown-unit { padding: 1.1rem 1.4rem; }
+  /* Countdown: 2×2 grid on small phones */
+  .hero-countdown  { flex-wrap: wrap; justify-content: center; max-width: 100%; }
+  .countdown-unit  { padding: 1.1rem 1.5rem; flex: 0 0 50%; max-width: 50%; }
   .countdown-unit::after { display: none; }
-  .countdown-num  { font-size: 2.2rem; }
+  .countdown-num   { font-size: 2.2rem; }
+
+  /* Add separators between countdown rows */
+  .countdown-unit:nth-child(1),
+  .countdown-unit:nth-child(2) {
+    border-bottom: 1px solid rgba(168,138,63,0.15);
+  }
+  .countdown-unit:nth-child(1) {
+    border-right: 1px solid rgba(168,138,63,0.15);
+  }
+  .countdown-unit:nth-child(3) {
+    border-right: 1px solid rgba(168,138,63,0.15);
+  }
 
   .hero-flourish  { display: none; }
   .scroll-indicator { display: none; }
 
-  .rsvp::before   { inset: 1.25rem; }
-  footer          { padding: 6rem 1.5rem 3rem; }
-  .footer-landscape { height: 90px; }
-  .footer-meta    { font-size: 0.6rem; letter-spacing: 0.26em; }
+  /* RSVP button full-width on mobile */
+  .btn-elegant {
+    display: block;
+    text-align: center;
+    padding: 1.2rem 2rem;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
 
-  .timeline::before     { left: 80px; }
-  .timeline-item        { grid-template-columns: 72px 1fr; gap: 1rem; padding: 0.75rem 0; }
+  .rsvp::before   { inset: 1rem; }
+  footer          { padding: 6rem 1.25rem 3rem; }
+  .footer-landscape { height: 90px; }
+  .footer-meta    { font-size: 0.6rem; letter-spacing: 0.24em; gap: 0.5rem; }
+
+  .timeline::before      { left: 80px; }
+  .timeline-item         { grid-template-columns: 72px 1fr; gap: 1rem; padding: 0.75rem 0; }
   .timeline-item::before { left: 75px; top: 1.4rem; }
-  .timeline-time        { font-size: 0.95rem; }
-  .timeline-event       { padding-left: 1.5rem; }
+  .timeline-time         { font-size: 0.95rem; }
+  .timeline-event        { padding-left: 1.5rem; }
+
+  .travel-grid    { gap: 3rem; }
+  .travel-block h3 { font-size: 1.6rem; }
+
+  /* Section label lines — shorter on mobile */
+  .section-label::before,
+  .section-label::after { width: 18px; }
+}
+
+/* ── Extra-small phones: 480px ── */
+@media (max-width: 480px) {
+  nav { padding: 0.9rem 1.1rem; }
+  .nav-mark { font-size: 0.95rem; letter-spacing: 0.16em; }
+
+  section { padding: 4rem 1rem; }
+  .story  { padding: 4.5rem 1rem; }
+  .rsvp   { padding: 5rem 1rem; }
+
+  .hero-eyebrow-text  { font-size: 0.58rem; letter-spacing: 0.4em; }
+  .hero-date          { font-size: 1rem; }
+  .hero-location      { font-size: 0.6rem; letter-spacing: 0.3em; }
+
+  .hero-divider .hline { width: 40px; }
+
+  /* Countdown: full single column on tiny screens */
+  .countdown-unit {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0.9rem 1rem;
+  }
+  .countdown-num  { font-size: 1.9rem; }
+  .countdown-label { font-size: 0.52rem; }
+
+  .section-title  { font-size: 2.4rem; }
+  .section-sub    { font-size: 1.05rem; }
+
+  .event-card     { padding: 2rem 1.25rem; }
+  .event-name     { font-size: 1.75rem; }
+  .event-number   { font-size: 3.5rem; }
+
+  .story-pullquote { padding: 2rem 1.25rem; }
+  .story-pullquote blockquote { font-size: 1.12rem; }
+  .story-intro    { font-size: 1.05rem; }
+  .sm-title       { font-size: 1.4rem; }
+
+  .schedule-title { font-size: 1.8rem; }
+  .timeline-event h4 { font-size: 1.1rem; }
+
+  .registry-placeholder { padding: 3rem 1.5rem; }
+
+  footer          { padding: 5rem 1rem 2.5rem; }
+  .footer-names   { font-size: 1.9rem; }
+  .footer-flourish { width: 160px; }
+  .footer-meta    { font-size: 0.55rem; letter-spacing: 0.2em; }
+
+  .rsvp::before   { inset: 0.75rem; }
+  .rsvp-deadline  { font-size: 0.85rem; padding: 0 0.5rem; }
+
+  .ornamental-divider { margin: 1.25rem auto 3rem; }
+  .ornamental-divider .line { width: 55px; }
 }
 </style>
 </head>
@@ -1330,6 +1466,9 @@ footer::before {
 <!-- CUSTOM CURSOR -->
 <div class="cursor"      id="cursor"     aria-hidden="true"></div>
 <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- Mobile nav overlay -->
+<div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 
 <!-- FILM GRAIN -->
 <div class="grain" aria-hidden="true"></div>
@@ -2002,30 +2141,45 @@ window.addEventListener('load', () => {
 })();
 
 /* ── Navigation ─────────────────────────────────────────────── */
-const mainNav = document.getElementById('mainNav');
+const mainNav   = document.getElementById('mainNav');
 const updateNav = () => mainNav.classList.toggle('scrolled', window.scrollY > 40);
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
-const navToggle = document.getElementById('navToggle');
-const navLinks  = document.getElementById('navLinks');
-navToggle.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navLinks.querySelectorAll('a').forEach(a =>
-  a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  })
-);
+const navToggle  = document.getElementById('navToggle');
+const navLinks   = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
+
+function openNav() {
+  navLinks.classList.add('open');
+  navOverlay.classList.add('show');
+  navToggle.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden'; // prevent scroll-behind
+}
+function closeNav() {
+  navLinks.classList.remove('open');
+  navOverlay.classList.remove('show');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+navToggle.addEventListener('click', () => navLinks.classList.contains('open') ? closeNav() : openNav());
+navOverlay.addEventListener('click', closeNav);
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+// Close on Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
 /* ── Hero parallax on scroll ─────────────────────────────────
-   - Landscape drifts up at 0.15× scroll speed
-   - Hero content fades + lifts at 0.3× speed
-   Stops once hero is out of view to save paint.
+   Desktop only — skipped on touch/mobile devices entirely.
+   On touch, the Ken Burns CSS animation handles visual interest.
    ─────────────────────────────────────────────────────────── */
 (function () {
+  // Skip parallax on touch devices (phones/tablets) — too janky & burns battery
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  // Also skip if user prefers reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   const hero    = document.getElementById('hero');
   const bg      = document.getElementById('heroLandscape');
   const content = document.getElementById('heroContent');
@@ -2033,16 +2187,14 @@ navLinks.querySelectorAll('a').forEach(a =>
   let ticking = false;
 
   function applyParallax() {
-    const y = window.scrollY;
+    const y     = window.scrollY;
     const heroH = hero.offsetHeight;
     if (y > heroH) { ticking = false; return; }
 
-    // Remove Ken Burns while scrolling, re-add when idle
     bg.classList.remove('idle');
-
     bg.style.transform      = `translateY(${y * 0.14}px)`;
     content.style.transform = `translateY(${y * 0.28}px)`;
-    content.style.opacity   = Math.max(0, 1 - (y / heroH) * 1.6);
+    content.style.opacity   = String(Math.max(0, 1 - (y / heroH) * 1.6));
     ticking = false;
   }
 
@@ -2050,7 +2202,7 @@ navLinks.querySelectorAll('a').forEach(a =>
     if (!ticking) { requestAnimationFrame(applyParallax); ticking = true; }
   }, { passive: true });
 
-  // Restore Ken Burns animation when user stops scrolling
+  // Restore Ken Burns when idle
   let idleTimer;
   window.addEventListener('scroll', () => {
     clearTimeout(idleTimer);
